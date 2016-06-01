@@ -13,7 +13,7 @@ public class Main {
      * Vector emmagatzema les paraules que s'utilitzaran al joc
      */
     static protected String paraules[] = {"hola","programació","casa"};
-
+    
     /**
      * Variable que serveix per seleccionar aleatoriament
      * la paraula que s'utilitzara en cada partida
@@ -24,30 +24,32 @@ public class Main {
      * Cadena que emmagatzemara els espais a omplir per
      * el jugador i les lletres introduides
      */
-    static protected String p;
-
+    static protected String paraula;
+    static int ERRORS = 5;
+    
+    
     public static void main(String[] args) {
         System.out.println("Comença el joc!");
+        int comptador;
+        int num_errors = 0;
         
         /**Seleccionar aleatoriament la paraula que s'utilitzara*/
         Random rand = new Random();
         index = rand.nextInt(3);
-        for (int i=0; i<paraules[index].length(); i++) {
-            p += "_";
+        for (comptador=0; comptador<paraules[index].length(); comptador++) {
+            paraula += "_";
         }
         
         /**Mostra per pantalla la cadena*/
-        System.out.println(p);
+        System.out.println(paraula);
 
         Scanner reader = new Scanner(System.in);
 
-        int num_errors = 0;
-
-        while (!p.equals(paraules[index]) && num_errors < 5) {
+        while (!paraula.equals(paraules[index]) && num_errors < ERRORS) {
             if (!nova_lletra(reader.next().charAt(0))) {
                 num_errors++;
             }
-            System.out.println(p);
+            System.out.println(paraula);
         }
    }
 
@@ -59,15 +61,17 @@ public class Main {
          */
     static public boolean nova_lletra(char nova) {
         boolean trobada = false;
-        String paraula_old = p;
-        p = "";
-        for (int i=0; i<paraules[index].length(); i++) {
-            if (paraules[index].charAt(i) == nova) {
-                p += paraules[index].charAt(i);
+        String paraula_old = paraula;
+        int comptador;
+        
+        paraula = "";
+        for (comptador=0; comptador<paraules[index].length(); comptador++) {
+            if (paraules[index].charAt(comptador) == nova) {
+            	paraula += paraules[index].charAt(comptador);
                 trobada = true;
             }
             else {
-                p += paraula_old.charAt(i);
+            	paraula += paraula_old.charAt(comptador);
             }
         }
         return trobada;
